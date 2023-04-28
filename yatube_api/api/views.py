@@ -50,17 +50,17 @@ class FollowViewSet(mixins.CreateModelMixin,
     search_fields = ('following__username', 'user__username',)
 
     def get_queryset(self):
-        """Возвращает все подписки пользователя, сделавшего запрос"""
+        """Возвращает все подписки пользователя, сделавшего запрос."""
         new_queryset = Follow.objects.filter(user=self.request.user)
         return new_queryset
 
     def perform_create(self, serializer):
         following = serializer.validated_data['following']
         if following == self.request.user:
-            raise ValidationError("Нельзя подписаться на самого себя")
+            raise ValidationError("Нельзя подписаться на самого себя.")
         # Проверяем, не подписан ли уже пользователь на данного автора
         if Follow.objects.filter(user=self.request.user,
                                  following=following).exists():
-            raise ValidationError("Вы уже подписаны на этого автора")
+            raise ValidationError("Вы уже подписаны на этого автора.")
 
         serializer.save(user=self.request.user)
