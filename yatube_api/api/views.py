@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework import pagination, permissions, viewsets, mixins
 from .permissions import OwnerOrReadOnly
 from rest_framework.filters import SearchFilter
-from rest_framework.exceptions import ValidationError
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -53,6 +52,6 @@ class FollowViewSet(mixins.CreateModelMixin,
         """Возвращает все подписки пользователя, сделавшего запрос."""
         new_queryset = Follow.objects.filter(user=self.request.user)
         return new_queryset
-    
+
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)

@@ -33,7 +33,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
 
 
-
 class FollowSerializer(serializers.ModelSerializer):
     user = serializers.SlugRelatedField(
         read_only=True,
